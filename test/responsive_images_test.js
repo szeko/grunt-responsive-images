@@ -259,5 +259,32 @@ exports.responsive_images = {
     }
 
     test.done();
+  },
+  custom_rename: function (test) {
+
+    var actual = {},
+    expected = {};
+
+    var files = [{
+          filename: 'tmnt.png',
+          expected: 'test/expected/custom_rename/',
+          actual:   'tmp/custom_rename_none/'
+        },{
+          filename: 'tmnt.png',
+          expected: 'test/expected/custom_rename/',
+          actual:   'tmp/custom_rename/turtles.png'
+        }];
+
+    test.expect(files.length);
+
+    actual = grunt.file.read(files[0].actual + files[0].filename);
+    expected = grunt.file.read(files[0].expected + files[0].filename);
+    test.equal(actual, expected, 'should be the same image.');
+
+    actual = grunt.file.read(files[1].actual);
+    expected = grunt.file.read(files[1].expected + files[0].filename);
+    test.equal(actual, expected, 'should be the same image.');
+
+    test.done();
   }
 };

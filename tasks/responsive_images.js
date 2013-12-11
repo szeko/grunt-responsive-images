@@ -119,6 +119,7 @@ module.exports = function(grunt) {
         var extName = path.extname(f.dest),
             srcPath = f.src[0],
             baseName = path.basename(srcPath, extName), // filename without extension
+            fileName,
             dirName,
             dstPath,
             subDir = "";
@@ -135,7 +136,23 @@ module.exports = function(grunt) {
 
         else {
           dirName = path.dirname(f.dest);
-          dstPath = path.join(dirName, subDir, baseName + sizeOptions.outputName + extName);
+          switch(typeof s.rename) {
+            // check if file should be renamed with sizeOptions
+            case 'boolean':
+              if (s.rename === false) { fileName = baseName; }
+              break;
+            // Apply custom rename function if set
+            case 'function':
+              fileName = s.rename.call(this, baseName, s.width, s.height);
+              // Use original filename if custom filename is invalid
+              if (typeof fileName !== 'undefined' &&
+                  String(fileName).length>0 &&
+                  !/[^A-Za-z0-9.-]/.test(fileName)) { break; }
+
+            default:
+              fileName = baseName + sizeOptions.outputName;
+          }
+          dstPath = path.join(dirName, subDir, fileName + extName);
         }
 
         var imageOptions = {};

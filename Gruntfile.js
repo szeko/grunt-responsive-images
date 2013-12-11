@@ -127,6 +127,34 @@ module.exports = function(grunt) {
           cwd: 'test/assets/custom_dest_path/',
           custom_dest: 'tmp/custom_dest_path/{%= width %}/{%= path %}'
         }]
+      },
+      custom_rename: {
+        options: {
+          sizes: [{
+              width: '100%',
+              rename: function(name, width, height) { return width; }
+            }]
+        },
+        files: [{
+          expand: true,
+          src: ['**/*.{jpg,gif,png}'],
+          cwd: 'test/assets/custom_rename/',
+          dest: 'tmp/custom_rename/'
+        }]
+      },
+      custom_rename_none: {
+        options: {
+          sizes: [{
+              width: '100%',
+              rename: false
+            }]
+        },
+        files: [{
+          expand: true,
+          src: ['**/*.{jpg,gif,png}'],
+          cwd: 'test/assets/custom_rename/',
+          dest: 'tmp/custom_rename_none/'
+        }]
       }
     },
 
