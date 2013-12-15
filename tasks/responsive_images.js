@@ -147,7 +147,7 @@ module.exports = function(grunt) {
               // Use original filename if custom filename is invalid
               if (typeof fileName !== 'undefined' &&
                   String(fileName).length>0 &&
-                  !/[^A-Za-z0-9.-@%]/.test(fileName)) { break; }
+                  !/[^A-Za-z0-9.-_@%]/.test(fileName)) { break; }
 
             default:
               fileName = baseName + sizeOptions.outputName;
